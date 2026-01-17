@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+  color: lightgray;
+}
+
+@layer base {
+  h1 {
+    @apply text-2xl font-bold;
+  }
+
+  h2 {
+    @apply text-xl font-semibold;
+  }
+
+  h3 {
+    @apply text-lg font-semibold;
+  }
+
+  li {
+    @apply font-bold;
+  }
+}
+
+@layer components {
+  .buttonStyle { 
+    @apply rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500
+  }
+}
+
