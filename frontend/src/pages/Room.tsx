@@ -98,9 +98,12 @@ export function Room() {
         <div className="py-4 md:pl-4 flex justify-center">
           <RoomQR roomId={roomId!} />
         </div>
-      <video width="320" height="240" controls id="remoteStream" />
-      <button onClick={() => navigate("/")}>Leave Room</button>
-      <button onClick={makeOffers}>Share</button>
+      </div>
+
+      <div className="flex flex-col items-center">
+        <video autoPlay playsInline controls id="remoteStream" />
+        <button onClick={makeOffers} className="buttonStyle">Share</button>
+        <button onClick={() => navigate("/")} className="buttonStyle">Leave Room</button>
       </div>
     </section>
   )
