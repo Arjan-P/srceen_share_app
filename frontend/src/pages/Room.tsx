@@ -100,7 +100,7 @@ export function Room() {
         </div>
       </div>
 
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center gap-4">
         <video autoPlay playsInline controls id="remoteStream" />
         <button onClick={makeOffers} className="buttonStyle">Share</button>
         <button onClick={() => navigate("/")} className="buttonStyle">Leave Room</button>
