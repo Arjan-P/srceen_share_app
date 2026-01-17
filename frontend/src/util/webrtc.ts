@@ -1,4 +1,3 @@
-import { setupSenderChannel } from "./datachannels";
 import { sendMessage } from "./signaling";
 import type { ClientId, SignalMsg } from "./signaling";
 
