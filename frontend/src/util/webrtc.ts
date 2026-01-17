@@ -104,13 +104,12 @@ async function flushIce(pc: RTCPeerConnection, iceBuffer: RTCIceCandidateInit[])
   iceBuffer.length = 0;
 }
 
-export function sendFile(from: ClientId, target: ClientId, file: File) {
+export async function sendStream(from: ClientId, target: ClientId) {
   const peer = createPeerConnection(from, target);
-  if (peer.dc!.readyState === "closed") {
-    console.log("create new file channel");
-    peer.dc = peer.pc.createDataChannel("file-channel");
+  const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: false });
+  for (const track of screenStream.getTracks()) {
+    peer.pc.addTrack(track, screenStream);
   }
-  setupSenderChannel(peer.dc!, file);
 }
 
 function removePeer(target: ClientId) {

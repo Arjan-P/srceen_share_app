@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import type { ClientId } from "../util/signaling";
 import { useSignaling } from "../context/SignalingContext";
-import { handleAnswer, handleIce, handleOffer, makeOffer } from "../util/webrtc";
+import { handleAnswer, handleIce, handleOffer, makeOffer, sendStream } from "../util/webrtc";
 import { RoomQR } from "../components/RoomQR";
 
 export function Room() {
@@ -11,12 +11,11 @@ export function Room() {
   const [peers, setPeers] = useState<ClientId[]>([]);
   const navigate = useNavigate();
 
-  const makeOffers = async () => {
+  const shareStream = async () => {
 
     for (const peer of peers) {
       const offer = await makeOffer(id, peer);
       if (offer) {
-
         sendMessage({
           type: "offer",
           from: id,
@@ -24,6 +23,8 @@ export function Room() {
           sdp: offer
         });
       }
+
+      sendStream(id, peer);
     }
   }
 
@@ -102,7 +103,7 @@ export function Room() {
 
       <div className="flex flex-col items-center gap-4">
         <video autoPlay playsInline controls id="remoteStream" />
-        <button onClick={makeOffers} className="buttonStyle">Share</button>
+        <button onClick={shareStream} className="buttonStyle">Share</button>
         <button onClick={() => navigate("/")} className="buttonStyle">Leave Room</button>
       </div>
     </section>
