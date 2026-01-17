@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import type { ClientId } from "../util/signaling";
 import { useSignaling } from "../context/SignalingContext";
 import { handleAnswer, handleIce, handleOffer, makeOffer } from "../util/webrtc";
@@ -9,6 +9,7 @@ export function Room() {
   const { roomId } = useParams();
   const { id, webSocketOpen, sendMessage, onMessage } = useSignaling();
   const [peers, setPeers] = useState<ClientId[]>([]);
+  const navigate = useNavigate();
 
   const makeOffers = async () => {
 
@@ -97,6 +98,8 @@ export function Room() {
         <div className="py-4 md:pl-4 flex justify-center">
           <RoomQR roomId={roomId!} />
         </div>
+      <video width="320" height="240" controls id="remoteStream" />
+      <button onClick={() => navigate("/")}>Leave Room</button>
       <button onClick={makeOffers}>Share</button>
       </div>
     </section>

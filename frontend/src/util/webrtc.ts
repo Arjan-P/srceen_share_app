@@ -42,12 +42,14 @@ function createPeerConnection(from: ClientId, target: ClientId): PeerEntry {
   });
 
   pc.addEventListener("track", (event) => {
-    const stream = event.streams[0];
-    const video = document.createElement("video");
-    video.autoplay = true;
-    video.playsInline = true;
-    video.srcObject = stream;
-    document.body.appendChild(video);
+    const [remoteStream] = event.streams;
+    const video = document.getElementById("remoteStream") as HTMLVideoElement | null;
+
+    if(!video) {
+      console.error(`Video element #remoteStrean not found`);
+      return;
+    }
+    video.srcObject = remoteStream;
   })
 
   peers.set(target, peer);
